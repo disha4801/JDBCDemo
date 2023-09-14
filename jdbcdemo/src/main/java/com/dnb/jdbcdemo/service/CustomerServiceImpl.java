@@ -33,17 +33,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 
-	public Optional<Customer> getCustomerById(int customerId) throws InvalidNameException, InvalidCustomerIdException,
-			InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException {
-
-		// TODO Auto-generated method stub
-
-		return customerRepository.findById(customerId);
-
-	}
-
-	@Override
-
 	public Iterable<Customer> getAllCustomers() throws InvalidNameException, InvalidCustomerIdException,
 			InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException {
 
@@ -81,6 +70,12 @@ public class CustomerServiceImpl implements CustomerService {
 
 		}
 
+	}
+
+	@Override
+	public Optional<Customer> getCustomerById(int customerId) throws IdNotFoundException {
+		// TODO Auto-generated method stub
+		return customerRepository.findById(customerId);
 	}
 
 }

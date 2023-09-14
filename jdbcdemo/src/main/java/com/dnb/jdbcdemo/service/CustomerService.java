@@ -15,9 +15,9 @@ import com.dnb.jdbcdemo.exceptions.InvalidNameException;
 public interface CustomerService{
 
 	public Customer createCustomer(Customer customer);
-	public Optional<Customer> getCustomerById(int customerId) throws InvalidNameException, InvalidCustomerIdException, InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException;
 	public Iterable<Customer> getAllCustomers() throws InvalidNameException, InvalidCustomerIdException, InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException;
 	public boolean deleteCustomerById(int customerId) throws InvalidCustomerIdException, InvalidNameException,
 			InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException, IdNotFoundException;
+	public Optional<Customer> getCustomerById(int customerId) throws IdNotFoundException;
 	
 }

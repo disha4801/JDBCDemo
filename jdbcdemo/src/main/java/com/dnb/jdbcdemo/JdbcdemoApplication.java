@@ -25,6 +25,7 @@ public class JdbcdemoApplication {
 	public static void main(String[] args) {
 		
 		SpringApplication.run(JdbcdemoApplication.class, args);
+		System.out.println("Helloo");
 //		Account account2;
 //
 //		ApplicationContext applicationContext = SpringApplication.run(JdbcdemoApplication.class, args);

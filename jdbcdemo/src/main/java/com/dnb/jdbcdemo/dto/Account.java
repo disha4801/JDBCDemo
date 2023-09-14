@@ -27,7 +27,7 @@ import lombok.ToString;
 @Getter
 @EqualsAndHashCode
 @NoArgsConstructor
-@ToString(exclude = "customer")
+@ToString
 @Entity
 
 public class Account {
@@ -144,7 +144,7 @@ public class Account {
 	@NotNull(message = "Date should be added")
 	@NotBlank(message ="Date should not be blank")
 	@jakarta.validation.constraints.Pattern(regexp = "^(\\d{4})-(\\d{2})-(\\d{2})$")
-	private String dob;
+	private LocalDate dob;
 	@Transient
 	private boolean accountStatus;
 	private int customerId;
