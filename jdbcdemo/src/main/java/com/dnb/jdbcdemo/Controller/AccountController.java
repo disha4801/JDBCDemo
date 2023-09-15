@@ -1,26 +1,19 @@
 package com.dnb.jdbcdemo.Controller;
 
 import java.util.List;
-import java.util.Optional;
-import javax.naming.InvalidNameException;
-import javax.security.auth.login.AccountNotFoundException;
 
+import java.util.Optional;
+import javax.security.auth.login.AccountNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.dnb.jdbcdemo.dto.Account;
 import com.dnb.jdbcdemo.exceptions.IdNotFoundException;
 import com.dnb.jdbcdemo.exceptions.InvalidAccountIdException;
-import com.dnb.jdbcdemo.exceptions.InvalidAddressException;
-import com.dnb.jdbcdemo.exceptions.InvalidContactNumberException;
-import com.dnb.jdbcdemo.exceptions.InvalidCustomerIdException;
-import com.dnb.jdbcdemo.exceptions.InvalidGovtIdException;
 import com.dnb.jdbcdemo.payload.request.AccountRequest;
 import com.dnb.jdbcdemo.service.AccountService;
 import com.dnb.jdbcdemo.utils.RequestToEntityMapper;
@@ -36,7 +29,9 @@ public class AccountController {
 	@Autowired
 	RequestToEntityMapper mapper;
 	
-	//@GetMapping("/allAccounts/{contactNumber}")
+	
+	
+	@GetMapping("/allAccounts/{contactNumber}")
 	public ResponseEntity<?>getAllAccountsByContactNumber(@PathVariable("contactNumber")String contactNumber) throws AccountNotFoundException{
 		List<Account>list=(List<Account>) accountService.getAllAccountsByContactNumber(contactNumber);
 		if(list.isEmpty()) {
@@ -69,7 +64,7 @@ public class AccountController {
 		}
 	}
 	
-	//@GetMapping("/{accountId}")//it should help us get the specific 	
+	@GetMapping("/{accountId}")//it should help us get the specific 	
 	public ResponseEntity<?> getAccountById(@PathVariable("accountId") String accountId) throws InvalidAccountIdException{
 		Optional<Account> optional=accountService.getAccountById(accountId);
 		if(optional.isPresent()) {
@@ -88,7 +83,7 @@ public class AccountController {
 	}
 	
 	//insert / create acc : post : @PostMapping
-	@PostMapping("/create") //comb of @RequestMapping + post method==>spring v4.3.x
+	//@PostMapping("/create") //comb of @RequestMapping + post method==>spring v4.3.x
 	
 	public ResponseEntity<?> createAccount(@Valid @RequestBody AccountRequest accountRequest) {
 		
@@ -120,6 +115,5 @@ public class AccountController {
 //			// TODO Auto-generated catch block
 //			return ResponseEntity.badRequest().body(e.getMessage());
 //		}
-		
 	}
 }
