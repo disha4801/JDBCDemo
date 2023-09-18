@@ -1,10 +1,14 @@
 package com.dnb.jdbcdemo.Controller;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import java.util.Optional;
+
+import javax.naming.InvalidNameException;
 import javax.security.auth.login.AccountNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dnb.jdbcdemo.dto.Account;
 import com.dnb.jdbcdemo.exceptions.IdNotFoundException;
 import com.dnb.jdbcdemo.exceptions.InvalidAccountIdException;
+import com.dnb.jdbcdemo.exceptions.InvalidAddressException;
+import com.dnb.jdbcdemo.exceptions.InvalidContactNumberException;
+import com.dnb.jdbcdemo.exceptions.InvalidCustomerIdException;
+import com.dnb.jdbcdemo.exceptions.InvalidGovtIdException;
 import com.dnb.jdbcdemo.payload.request.AccountRequest;
 import com.dnb.jdbcdemo.service.AccountService;
 import com.dnb.jdbcdemo.utils.RequestToEntityMapper;
@@ -71,51 +79,35 @@ public class AccountController {
 		Optional<Account> optional=accountService.getAccountById(accountId);
 		if(optional.isPresent()) {
 			return ResponseEntity.ok(optional.get());
+	
 		}
 		else {
 //			Map<String, String>map=new HashMap<>();
-//			map.put("message", "accountId nto found");
+//			map.put("message", "accountId not found");
 //			map.put("HttpStatus", HttpStatus.NOT_FOUND+"");
 //			ResponseEntity<?> responseEntity=new ResponseEntity(map,HttpStatus.NOT_FOUND);
 //			return responseEntity;
+			//map.put(accountId)
 			//return ResponseEntity.notFound().build();
 			throw new InvalidAccountIdException("Account id is not valid");
 		}
 		
 	}
-	
-	//insert / create acc : post : @PostMapping
-	@PostMapping("/create") //comb of @RequestMapping + post method==>spring v4.3.x
-	
-	public ResponseEntity<?> createAccount(@Valid @RequestBody AccountRequest accountRequest) {
-		
-		return ResponseEntity.ok(mapper.getAccountEntityObject(accountRequest));
-		
-		
-//		try {
-//			Account account2 = null;
-//			try {
-//				account2 = accountService.createAccount(account);
-//			} catch (InvalidNameException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (InvalidCustomerIdException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (InvalidContactNumberException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (InvalidAddressException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (InvalidGovtIdException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			return new ResponseEntity(account2, HttpStatus.CREATED);
-//		} catch (IdNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			return ResponseEntity.badRequest().body(e.getMessage());
-//		}
+
+	@PostMapping("/create") // comb of @RequestMapping + post method==>spring v4.3.x
+
+	public ResponseEntity<?> createAccount(@Valid @RequestBody AccountRequest accountRequest)
+		 {
+		Account account2 = mapper.getAccountEntityObject(accountRequest);
+		// return ResponseEntity.ok(mapper.getAccountEntityObject(accountRequest));
+
+		try {
+			Account account3 = accountService.createAccount(account2);
+
+			return new ResponseEntity(account3, HttpStatus.CREATED);
+		} catch (InvalidNameException | InvalidCustomerIdException | InvalidContactNumberException
+				| InvalidAddressException | InvalidGovtIdException  |IdNotFoundException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 }

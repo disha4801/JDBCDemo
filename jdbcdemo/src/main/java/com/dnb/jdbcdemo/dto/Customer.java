@@ -8,6 +8,7 @@ import com.dnb.jdbcdemo.exceptions.InvalidAddressException;
 import com.dnb.jdbcdemo.exceptions.InvalidContactNumberException;
 import com.dnb.jdbcdemo.exceptions.InvalidCustomerIdException;
 import com.dnb.jdbcdemo.exceptions.InvalidGovtIdException;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -46,7 +47,7 @@ public class Customer {
 // 
 //
 	@Id
-	@NotBlank(message = "account id should not be blank")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int customerId;
 	private String customerName;
 	private String customerContactNumber;
@@ -54,6 +55,7 @@ public class Customer {
 	private String customerPAN;
 	private String customerUUID;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "customer")
+	@JsonIgnoreProperties("account")
 	private List<Account> accountList = new ArrayList<>();
 }
 

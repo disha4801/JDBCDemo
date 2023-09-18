@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import com.dnb.jdbcdemo.utils.CustomAccountIdGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -31,7 +32,7 @@ import lombok.ToString;
 @Getter
 @EqualsAndHashCode
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "customer")
 @Entity
 
 public class Account {
@@ -124,12 +125,12 @@ public class Account {
 //	}
 
 	@Id
-	// @GeneratedValue(strategy = GenerationType.UUID)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_seq")
-	@GenericGenerator(name = "account_seq", strategy = "com.dnb.jdbcdemo.utils.DatePrefixedSequenceIdGenerator", parameters = {
+	@GeneratedValue(strategy = GenerationType.UUID)
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_seq")
+	//@GenericGenerator(name = "account_seq", strategy = "com.dnb.jdbcdemo.utils.DatePrefixedSequenceIdGenerator", parameters = {
 //			 @Parameter(name=CustomAccountIdGenerator.INCREMENT_PARAM,value ="50")})
 //			 @Parameter(name =CustomAccountIdGenerator.VALUE_PREFIX_PARAMETER,value="A_"),
-			@Parameter(name = CustomAccountIdGenerator.NUMBER_FORMAT_PARAMETER, value = "_%05d") })
+			//@Parameter(name = CustomAccountIdGenerator.NUMBER_FORMAT_PARAMETER, value = "_%05d") })
   
 	@NotBlank(message = "account id should not be blank")
 	public String accountId;
@@ -146,13 +147,14 @@ public class Account {
 	private String address;
 	private LocalDate accountCreatedDate = LocalDate.now();
 	@NotNull(message = "Date should be added")
-	@NotBlank(message ="Date should not be blank")
-	@jakarta.validation.constraints.Pattern(regexp = "^(\\d{4})-(\\d{2})-(\\d{2})$")
+	//@NotBlank(message ="Date should not be blank")
+	//@jakarta.validation.constraints.Pattern(regexp = "^(\\d{4})-(\\d{2})-(\\d{2})$")
 	private LocalDate dob;
 	@Transient
 	private boolean accountStatus;
 	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinColumn(name="customer_id",referencedColumnName = "customerId")
+	@JsonIgnoreProperties("accountList")
 	private Customer customer;
 	
 

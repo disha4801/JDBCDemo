@@ -8,6 +8,8 @@ import com.dnb.jdbcdemo.dto.Customer;
 
 public interface CustomerRepository extends CrudRepository<Customer, Integer> {
 
+	
+
 
 //	public Customer createCustomer(Customer customer);
 //

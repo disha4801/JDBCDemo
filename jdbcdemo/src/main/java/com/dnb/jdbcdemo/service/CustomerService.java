@@ -19,5 +19,6 @@ public interface CustomerService{
 	public boolean deleteCustomerById(int customerId) throws InvalidCustomerIdException, InvalidNameException,
 			InvalidContactNumberException, InvalidAddressException, InvalidGovtIdException, IdNotFoundException;
 	public Optional<Customer> getCustomerById(int customerId) throws IdNotFoundException;
-	
+	public boolean existsById(int customerId);
+
 }

@@ -1,6 +1,5 @@
 package com.dnb.jdbcdemo.service;
 
-
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,6 +75,13 @@ public class CustomerServiceImpl implements CustomerService {
 	public Optional<Customer> getCustomerById(int customerId) throws IdNotFoundException {
 		// TODO Auto-generated method stub
 		return customerRepository.findById(customerId);
+	}
+
+	@Override
+	public boolean existsById(int customerId) {
+		// TODO Auto-generated method stub
+		if (customerRepository.existsById(customerId)) return true;
+		else return false;
 	}
 
 }
