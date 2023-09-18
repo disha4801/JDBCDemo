@@ -6,8 +6,10 @@ import java.util.Optional;
 import javax.security.auth.login.AccountNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,7 +55,7 @@ public class AccountController {
 //		}
 //	}
 	
-	//@DeleteMapping("/{accountId}")
+	@DeleteMapping("/{accountId}")
 	public ResponseEntity<?> deleteAccountById(@PathVariable("accountId") String accountId) throws  IdNotFoundException, InvalidAccountIdException{
 		if(accountService.accountExistsById(accountId)) {
 			accountService.deleteAccountById(accountId);
@@ -83,7 +85,7 @@ public class AccountController {
 	}
 	
 	//insert / create acc : post : @PostMapping
-	//@PostMapping("/create") //comb of @RequestMapping + post method==>spring v4.3.x
+	@PostMapping("/create") //comb of @RequestMapping + post method==>spring v4.3.x
 	
 	public ResponseEntity<?> createAccount(@Valid @RequestBody AccountRequest accountRequest) {
 		

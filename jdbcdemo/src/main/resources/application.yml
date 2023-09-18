@@ -5,7 +5,7 @@ spring:
       connection-timeout: 6000
       maximum-pool-size: 5
     password: root
-    url: jdbc:mysql://localhost:3306/dnb2
+    url: jdbc:mysql://localhost:3306/dnb6
     username: root
   jpa:
     hibernate:
@@ -18,3 +18,4 @@ server:
   port: 9000
   error:
     include-message: always
+    

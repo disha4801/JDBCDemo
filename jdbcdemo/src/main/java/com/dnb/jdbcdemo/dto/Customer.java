@@ -1,16 +1,22 @@
 package com.dnb.jdbcdemo.dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import javax.naming.InvalidNameException;
 import com.dnb.jdbcdemo.exceptions.InvalidAddressException;
 import com.dnb.jdbcdemo.exceptions.InvalidContactNumberException;
 import com.dnb.jdbcdemo.exceptions.InvalidCustomerIdException;
 import com.dnb.jdbcdemo.exceptions.InvalidGovtIdException;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -47,6 +53,8 @@ public class Customer {
 	private String customerAddress;
 	private String customerPAN;
 	private String customerUUID;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "customer")
+	private List<Account> accountList = new ArrayList<>();
 }
 
 // 

@@ -8,11 +8,15 @@ import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.Length;
 import com.dnb.jdbcdemo.utils.CustomAccountIdGenerator;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -123,8 +127,8 @@ public class Account {
 	// @GeneratedValue(strategy = GenerationType.UUID)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_seq")
 	@GenericGenerator(name = "account_seq", strategy = "com.dnb.jdbcdemo.utils.DatePrefixedSequenceIdGenerator", parameters = {
-			// @Parameter(name=CustomAccountIdGenerator.INCREMENT_PARAM,value ="50")})
-			// @Parameter(name =CustomAccountIdGenerator.VALUE_PREFIX_PARAMETER,value="A_"),
+//			 @Parameter(name=CustomAccountIdGenerator.INCREMENT_PARAM,value ="50")})
+//			 @Parameter(name =CustomAccountIdGenerator.VALUE_PREFIX_PARAMETER,value="A_"),
 			@Parameter(name = CustomAccountIdGenerator.NUMBER_FORMAT_PARAMETER, value = "_%05d") })
   
 	@NotBlank(message = "account id should not be blank")
@@ -147,6 +151,9 @@ public class Account {
 	private LocalDate dob;
 	@Transient
 	private boolean accountStatus;
-	private int customerId;
+	@ManyToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@JoinColumn(name="customer_id",referencedColumnName = "customerId")
+	private Customer customer;
+	
 
 }
